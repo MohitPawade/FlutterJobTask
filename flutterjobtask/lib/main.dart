@@ -1,4 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+import 'interactionScreen.dart';
 
 void main() {
   runApp(const FlutterJobTask());
@@ -30,6 +35,12 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   @override
+  void initState() {
+    super.initState();
+    _loadJson();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey,
@@ -39,6 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Center(
           child: Container(
             color: Colors.grey,
+            child: InteractionScreen(),
           ),
         ),
       ),
@@ -51,4 +63,10 @@ class _MyHomePageState extends State<MyHomePage> {
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
+}
+
+void _loadJson() async {
+  String data = await rootBundle.loadString('/flutter_task.json');
+  final jsonResult = json.decode(data);
+  print('Json Input data is: $jsonResult');
 }
