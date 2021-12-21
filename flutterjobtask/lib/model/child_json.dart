@@ -11,7 +11,10 @@ class Child {
   int height = 0;
   int width = 0;
 
-  String getType() {
+  Child(this.type, this.text, this.x, this.y, this.color, this.fontSize,
+      this.bold, this.italic, this.src, this.height, this.width);
+
+  /*String getType() {
     return type;
   }
 
@@ -97,5 +100,20 @@ class Child {
 
   void setWidth(int width) {
     this.width = width;
+  }
+*/
+  factory Child.fromJson(Map<String, dynamic> json) {
+    return Child(
+        (json['type'] as String?) ?? '',
+        (json['text'] as String?) ?? '',
+        (json['x'] as int?) ?? 0,
+        (json['y'] as int?) ?? 0,
+        (json['color'] as String?) ?? '',
+        (json['fontSize'] as int?) ?? 0,
+        (json['bold'] as bool?) ?? false,
+        (json['italic'] as bool?) ?? false,
+        (json['src'] as String?) ?? '',
+        (json['height'] as int?) ?? 0,
+        (json['width'] as int?) ?? 0);
   }
 }

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutterjobtask/model/inputattributes_json.dart';
 
 import 'interactionScreen.dart';
 
@@ -40,6 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
     _loadJson();
   }
 
+  //late List<InputAttributes> _inputAttributesList ;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,6 +69,28 @@ class _MyHomePageState extends State<MyHomePage> {
 
 void _loadJson() async {
   String data = await rootBundle.loadString('/flutter_task.json');
-  final jsonResult = json.decode(data);
+  final jsonResult = json.decode(data) as List;
   print('Json Input data is: $jsonResult');
+
+  List<InputAttributesJson> _inputAttributesList =
+      jsonResult.map((e) => InputAttributesJson.fromJson(e)).toList();
+  _parseJson(_inputAttributesList);
+}
+
+void _parseJson(List<InputAttributesJson> attributesList) {
+  print('Inside parseJson');
+
+  if (attributesList.isNotEmpty) {
+    for (int i = 0; i < attributesList.length; i++) {
+      print('For i = $i');
+      print('Attribute -- : ${attributesList[i].attrs}');
+      print('Attribute -- size  -- : ${attributesList[i].attrs.size}');
+      print(
+          'Attribute -- size -- height: ${attributesList[i].attrs.size.height}');
+      print(
+          'Attribute -- background -- type: ${attributesList[i].attrs.backgroundColor.type}');
+
+      print('Children -- Height: ${attributesList[i].children[1].height}');
+    }
+  }
 }
